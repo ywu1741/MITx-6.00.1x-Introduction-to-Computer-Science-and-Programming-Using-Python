@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Sep 28 21:00:35 2020
+
+@author: maggiewu
+"""
+
+def closest_power(base, num):
+    '''
+    base: base of the exponential, integer > 1
+    num: number you want to be closest to, integer > 0
+    Find the integer exponent such that base**exponent is closest to num.
+    Note that the base**exponent may be either greater or smaller than num.
+    In case of a tie, return the smaller value.
+    Returns the exponent.
+    '''
+    exponent = 0
+    abs1 = 0
+    abs2 = 0
+    while base**exponent < num:
+        exponent +=1
+        
+    abs1 = abs(num-base**(exponent-1))
+    abs2 = abs(num-base**exponent)
+    
+    if abs2<abs1:
+        return exponent
+    else:
+        return exponent-1
+    
+    
+def lessThan4(aList):
+    '''
+    aList: a list of strings
+    '''
+    bList = []
+    for word in aList:
+        if len(word)<4:
+            bList.append(word)
+    
+    return bList
+
+testlist = ["apple", "cat", "dog", "banana"]
+
+def uniqueValues(aDict):
+    '''
+    aDict: a dictionary
+    '''
+    keylist = []
+    valuelist = []
+    
+    # append the values to the valuelist
+    
+    for key in aDict:
+        valuelist.append(aDict[key])
+    
+    for key in aDict:
+        if type(aDict[key]) == int:
+            times = valuelist.count(aDict[key])
+            if times ==1:
+                keylist.append(key)
+    keylist.sort()
+                
+    return keylist
+
+
+def general_poly(L):
+    """ L, a list of numbers (n0, n1, n2, ... nk)
+    Returns a function, which when applied to a value x, returns the value 
+    n0 * x^k + n1 * x^(k-1) + ... nk * x^0 """
+    
+    def f(x):
+        length = len(L)
+        value = 0
+        for i in range(length):
+            value += L[i]*x**(length-1-i)
+        return value
+    return f
+
+        
+def max_val(t): 
+    """ t, tuple or list
+        Each element of t is either an int, a tuple, or a list
+        No tuple or list is empty
+        Returns the maximum int in t or (recursively) in an element of t """ 
+    
+    valuelist=[]
+
+    def get_int(x):
+        for item in x:
+            if type(item)==int:
+                valuelist.append(item)
+            else:
+                get_int(item)
+                
+    get_int(t)
+    
+    return max(valuelist)
+   
