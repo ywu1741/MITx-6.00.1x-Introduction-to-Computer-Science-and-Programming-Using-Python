@@ -41,8 +41,6 @@ def lessThan4(aList):
     
     return bList
 
-testlist = ["apple", "cat", "dog", "banana"]
-
 def uniqueValues(aDict):
     '''
     aDict: a dictionary
