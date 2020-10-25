@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+
+@author: maggiewu
+"""
+
+#1
+def sum_digits(s):
+    """ assumes s a string
+        Returns an int that is the sum of all of the digits in s.
+          If there are no digits in s it raises a ValueError exception. """
+    ls_num = []
+    ls_cha = []
+    for character in s:
+        try:
+            num = int(character)
+            ls_num.append(num)
+        except ValueError:
+            ls_cha.append(character)
+            
+    if ls_num == []:
+        raise ValueError("No digit available in the string.")
+    else:
+        return sum(ls_num)
+
+
+#2
+def is_composite(num):
+    '''
+    returns true if the input number is a composite number
+
+    '''
+    composite = False
+    if num == 1 or num ==2:
+        composite = False
+    else:
+        for factor in range(2,num):
+            if num%factor == 0:
+                composite = True
+                break
+    return composite
+
+def primes_list(N):
+    '''
+    N: an integer
+    Returns a list of prime numbers
+    '''
+    ls_prime = []
+    for num in range(2,N+1):
+        if is_composite(num)==False:
+            ls_prime.append(num)
+            
+    return ls_prime
+
+
+#3
+def f(a,b):
+    return a+b
+
+def dict_interdiff(d1, d2):
+    '''
+    d1, d2: dicts whose keys and values are integers
+    Returns a tuple of dictionaries according to the instructions above
+    '''
+    dict_same = {}
+    dict_diff = {}
+    for key in d1:
+        if key in d2.keys():
+            dict_same[key] = f(d1[key],d2[key])
+        else:
+            dict_diff[key] = d1[key]
+            
+    for key in d2:
+        if key not in d1.keys():
+            dict_diff[key] = d2[key]
+    
+    return (dict_same, dict_diff)
+
+
+#4
+class Person(object):
+    def __init__(self, name):
+        #create a person with name name
+        self.name = name
+        try:
+            firstBlank = name.rindex(' ')
+            self.lastName = name[firstBlank+1:]
+        except:
+            self.lastName = name
+        self.age = None
+    def getLastName(self):
+        #return self's last name
+        return self.lastName
+    def setAge(self, age):
+        #assumes age is an int greater than 0
+        #sets self's age to age (in years)
+        self.age = age
+    def getAge(self):
+        #assumes that self's age has been set
+        #returns self's current age in years
+        if self.age == None:
+            raise ValueError
+        return self.age
+    def __lt__(self, other):
+        #return True if self's name is lexicographically less
+        #than other's name, and False otherwise
+        if self.lastName == other.lastName:
+            return self.name < other.name
+        return self.lastName < other.lastName
+    def __str__(self):
+        #return self's name
+        return self.name
+        
+class USResident(Person):
+    """ 
+    A Person who resides in the US.
+    """
+    def __init__(self, name, status):
+        """ 
+        Initializes a Person object. A USResident object inherits 
+        from Person and has one additional attribute:
+        status: a string, one of "citizen", "legal_resident", "illegal_resident"
+        Raises a ValueError if status is not one of those 3 strings
+        """
+        Person.__init__(self, name)
+        status_list = ['citizen','legal_resident','illegal_resident']
+        self.status = status
+        if self.status not in status_list:
+            raise ValueError("Not a valid status.")
+        
+    def getStatus(self):
+        """
+        Returns the status
+        """
+        return self.status
+
+class myDict(object):
+    """ Implements a dictionary without using a dictionary """
+    def __init__(self):
+        """ initialization of your representation """
+        self.keys = []
+        self.values = []
+        
+    def assign(self, k, v):
+        """ k (the key) and v (the value), immutable objects  """
+        if k not in self.keys:
+            self.keys.append(k)
+            self.values.append(v)
+        else:
+            for i in range(len(self.keys)):
+                if self.keys[i] == k:
+                    self.values[i] = v
+        
+    def getval(self, k):
+        """ k, immutable object  """
+        if k not in self.keys:
+            raise KeyError(k)
+        else:
+            for i in range(len(self.keys)):
+                if self.keys[i] == k:
+                    ans = self.values[i]
+                    break
+            return ans
+                
+        
+    def delete(self, k):
+        """ k, immutable object """   
+        if k not in self.keys:
+            raise KeyError(k)
+        else:
+            for i in range(len(self.keys)):
+                if self.keys[i] == k:
+                    self.keys.remove(self.keys[i])
+                    self.values.remove(self.values[i])
+                    break
+    
+                
